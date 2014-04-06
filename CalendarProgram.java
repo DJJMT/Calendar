@@ -69,8 +69,8 @@ public class CalendarProgram{
         Month_Label.setBounds(160-Month_Label.getPreferredSize().width/2, 25, 100, 25);
         Year_Label.setBounds(10, 305, 100, 20);
         Year_ComboBox.setBounds(230, 305, 80, 20);
-        Last_Button.setBounds(10, 25, 70, 25);
-        Next_Button.setBounds(260, 25, 70, 25);
+        Last_Button.setBounds(10, 25, 75, 25);
+        Next_Button.setBounds(260, 25, 75, 25);
         Calendar_ScrollPane.setBounds(10, 50, 300, 250);
       
         //Make frame visible
