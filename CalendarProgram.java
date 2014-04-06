@@ -40,8 +40,8 @@ public class CalendarProgram{
         Month_Label = new JLabel ("January");
         Year_Label = new JLabel ("Change year:");
         Year_ComboBox = new JComboBox();
-        Last_Button = new JButton ("&lt;&lt;");
-        Next_Button = new JButton ("&gt;&gt;");
+        Last_Button = new JButton ("LAST");
+        Next_Button = new JButton ("NEXT");
         Calendar_TableModel = new DefaultTableModel(){public boolean isCellEditable(int rowIndex, int mColIndex){return false;}};
         Calendar_Table = new JTable(Calendar_TableModel);
         Calendar_ScrollPane = new JScrollPane(Calendar_Table);
@@ -65,12 +65,12 @@ public class CalendarProgram{
         Calendar_Panel.add(Calendar_ScrollPane);
         
         //Set bounds
-        Calendar_Panel.setBounds(0, 0, 320, 335);
+        Calendar_Panel.setBounds(0, 0, 400, 400);
         Month_Label.setBounds(160-Month_Label.getPreferredSize().width/2, 25, 100, 25);
-        Year_Label.setBounds(10, 305, 80, 20);
+        Year_Label.setBounds(10, 305, 100, 20);
         Year_ComboBox.setBounds(230, 305, 80, 20);
-        Last_Button.setBounds(10, 25, 50, 25);
-        Next_Button.setBounds(260, 25, 50, 25);
+        Last_Button.setBounds(10, 25, 70, 25);
+        Next_Button.setBounds(260, 25, 70, 25);
         Calendar_ScrollPane.setBounds(10, 50, 300, 250);
       
         //Make frame visible
@@ -119,7 +119,7 @@ public class CalendarProgram{
     public static void refreshCalendar(int month, int year){
         //Variables
         String[] months =  {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-        int nod, som; //Number Of Days, Start Of Month
+        int Num_Days, Start_Of_Month; //Number Of Days, Start Of Month
         
         //Allow/disallow buttons
         Last_Button.setEnabled(true);
@@ -139,13 +139,13 @@ public class CalendarProgram{
         
         //Get first day of month and number of days
         GregorianCalendar cal = new GregorianCalendar(year, month, 1);
-        nod = cal.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
-        som = cal.get(GregorianCalendar.DAY_OF_WEEK);
+        Num_Days = cal.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
+        Start_Of_Month = cal.get(GregorianCalendar.DAY_OF_WEEK);
         
         //Draw calendar
-        for (int i=1; i<=nod; i++){
-            int row = new Integer((i+som-2)/7);
-            int column  =  (i+som-2)%7;
+        for (int i=1; i<=Num_Days; i++){
+            int row = new Integer((i+Start_Of_Month-2)/7);
+            int column  =  (i+Start_Of_Month-2)%7;
             Calendar_TableModel.setValueAt(i, row, column);
         }
         
