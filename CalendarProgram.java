@@ -29,9 +29,15 @@ public class CalendarProgram{
         catch (IllegalAccessException e) {}
         catch (UnsupportedLookAndFeelException e) {}
         
+        //Get Screen Size
+        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+
+        int width = (int) screen.getWidth();
+        int height = (int) screen.getHeight();
+        
         //Prepare frame
         Main_JFrame = new JFrame ("Team J Calendar App"); //Create frame
-        Main_JFrame.setSize(400, 400); //Set size to 400x400 pixels
+        Main_JFrame.setSize(width - 50, height - 50); //Set size
         pane = Main_JFrame.getContentPane(); //Get content pane
         pane.setLayout(null); //Apply null layout
         Main_JFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Close when X is clicked
@@ -65,16 +71,16 @@ public class CalendarProgram{
         Calendar_Panel.add(Calendar_ScrollPane);
         
         //Set bounds
-        Calendar_Panel.setBounds(0, 0, 400, 400);
-        Month_Label.setBounds(160-Month_Label.getPreferredSize().width/2, 25, 100, 25);
-        Year_Label.setBounds(10, 305, 100, 20);
-        Year_ComboBox.setBounds(230, 305, 80, 20);
-        Last_Button.setBounds(10, 25, 75, 25);
-        Next_Button.setBounds(260, 25, 75, 25);
-        Calendar_ScrollPane.setBounds(10, 50, 300, 250);
+        Calendar_Panel.setBounds(0, 0, width-50, height-50);
+        Month_Label.setBounds((width - 50)/2 - 50, 25, 100, 25);
+        Year_Label.setBounds(30, height - 120, 80, 25);
+        Year_ComboBox.setBounds(width - 180, height - 120, 80, 25);
+        Last_Button.setBounds(((width - 50)/2) - 218, 25, 75, 25);
+        Next_Button.setBounds(((width - 50)/2) + 75, 25, 75, 25);
+        Calendar_ScrollPane.setBounds(10, 55, width - 65, ((height-200) - 5));
       
         //Make frame visible
-        Main_JFrame.setResizable(true);
+        Main_JFrame.setResizable(false);
         Main_JFrame.setVisible(true);
         
         //Get real month/year
@@ -103,7 +109,7 @@ public class CalendarProgram{
         Calendar_Table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
         //Set row/column count
-        Calendar_Table.setRowHeight(38);
+        Calendar_Table.setRowHeight(((height-200) - 5) /6);
         Calendar_TableModel.setColumnCount(7);
         Calendar_TableModel.setRowCount(6);
         
@@ -120,6 +126,8 @@ public class CalendarProgram{
         //Variables
         String[] months =  {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
         int Num_Days, Start_Of_Month; //Number Of Days, Start Of Month
+        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = (int) screen.getWidth();
         
         //Allow/disallow buttons
         Last_Button.setEnabled(true);
@@ -127,7 +135,7 @@ public class CalendarProgram{
         if (month == 0 && year <= Year_Actual-10){Last_Button.setEnabled(false);} //Too early
         if (month == 11 && year >= Year_Actual+100){Next_Button.setEnabled(false);} //Too late
         Month_Label.setText(months[month]); //Refresh the month label (at the top)
-        Month_Label.setBounds(160-Month_Label.getPreferredSize().width/2, 25, 180, 25); //Re-align label with calendar
+        Month_Label.setBounds((width - 50)/2 - 50, 25, 100, 25); //Re-align label with calendar
         Year_ComboBox.setSelectedItem(String.valueOf(year)); //Select the correct year in the combo box
         
         //Clear table
