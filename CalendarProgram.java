@@ -73,7 +73,7 @@ public class CalendarProgram{
         //Set bounds
         Calendar_Panel.setBounds(0, 0, width-50, height-50);
         Month_Label.setBounds((width - 50)/2 - 50, 25, 100, 25);
-        Year_Label.setBounds(30, height - 120, 80, 25);
+        Year_Label.setBounds(width - 270, height - 120, 80, 25);
         Year_ComboBox.setBounds(width - 180, height - 120, 80, 25);
         Last_Button.setBounds(((width - 50)/2) - 218, 25, 75, 25);
         Next_Button.setBounds(((width - 50)/2) + 75, 25, 75, 25);
