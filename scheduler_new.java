@@ -170,8 +170,8 @@ class scheduler_new extends JFrame
 			try
 		  {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/practice","root","mysql");
-			PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO newaccount Values('Spongebob', 'Squarepants', 'sb', 'pineapple00');");
+			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://99.3.32.166:3306/scheduler","root","mysql");
+			PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO all_users Values(1, 3, 'SpongeBob', 'Squarepants', 'sbsp', 'pineapple00');");
 			statement.executeUpdate();
 			con.close();
 		  }
