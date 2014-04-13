@@ -5,7 +5,9 @@ import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.regex.Pattern;
 
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,32 +15,33 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+
 public class NewFrame1 extends JFrame implements ActionListener
 {
 	private JButton Back_Button;
 	private JButton Create_Button;
-	
+	JPanel pane = new JPanel(); // create pane object	
+//	JButton Create_Button = new JButton("CREATE");
+//	JButton Back_Button = new JButton("Existing User?");
+	JTextField FirstName_Box = new JTextField(20);
+	JTextField LastName_Box = new JTextField(20);
+	JTextField Username_Box = new JTextField(10);
+	JPasswordField Password_Box = new JPasswordField(20);
+	JPasswordField Password_Veri_Box = new JPasswordField(20);
+	JTextField Access_Box = new JTextField(20);
+	JLabel FirstName_Label = new JLabel("First Name: ");
+	JLabel LastName_Label = new JLabel("Last Name: ");
+	JLabel Username_Label = new JLabel("Username: ");
+	JLabel Password_Label = new JLabel("Password: ");
+	JLabel Password_Veri_Label = new JLabel("Retype Password: ");
+	JLabel Access_Label = new JLabel("Access Code : ");
+
         //initialises the frame and opens it
         public NewFrame1()
         {
         	super("New User Registration");
         	
-        	JPanel pane = new JPanel(); // create pane object	
-//        	JButton Create_Button = new JButton("CREATE");
-//        	JButton Back_Button = new JButton("Existing User?");
-        	JTextField FirstName_Box = new JTextField();
-        	JTextField LastName_Box = new JTextField();
-        	JTextField Username_Box = new JTextField();
-        	JPasswordField Password_Box = new JPasswordField();
-        	JPasswordField Password_Veri_Box = new JPasswordField();
-        	JTextField Priority_Box = new JTextField();
-        	JLabel FirstName_Label = new JLabel("First Name: ");
-        	JLabel LastName_Label = new JLabel("Last Name: ");
-        	JLabel Username_Label = new JLabel("Username: ");
-        	JLabel Password_Label = new JLabel("Password: ");
-        	JLabel Password_Veri_Label = new JLabel("Retype Password: ");
-        	JLabel Priority_Label = new JLabel("Access Code : ");
-
+        	
 //        	String userpass = Password_Box.getText();
 //            String veripass = Password_Veri_Box.getText();
 
@@ -124,20 +127,20 @@ public class NewFrame1 extends JFrame implements ActionListener
     	    pane.add(Password_Veri_Box);
 
 
-    		/*LABEL - PRIORITY_LABEL*/
-    		Priority_Label.setLayout(null);
-    		Priority_Label.setLocation(10, 220);
-    		Priority_Label.setSize(100,25);
-    		pane.add(Priority_Label);
+    		/*LABEL - Access_LABEL*/
+    	    Access_Label.setLayout(null);
+    	    Access_Label.setLocation(10, 220);
+    	    Access_Label.setSize(100,25);
+    		pane.add(Access_Label);
 
 
     		/*TEXT FIELD - PRIORITY_BOX*/
-    		Priority_Box.setLayout(null);
-    		Priority_Box.setLocation(120, 220);
-    		Priority_Box.setSize(210, 25);
-    	    pane.add(Priority_Box);
+    		Access_Box.setLayout(null);
+    		Access_Box.setLocation(120, 220);
+    		Access_Box.setSize(210, 25);
+    	    pane.add(Access_Box);
 
-
+    	    
     	    /*BUTTON - CREATE*/
     	    Create_Button = new JButton("Create Account");
     	    Create_Button.setLayout(null);
@@ -172,6 +175,65 @@ public class NewFrame1 extends JFrame implements ActionListener
 
         private class ButtonHandler implements ActionListener {
             public void actionPerformed(ActionEvent e) {
+            	 //Jtextfield to variables
+        	    String FirstName_Input = FirstName_Box.getText();
+        	    String LastName_Input = LastName_Box.getText();
+        	    String Username_Input = Username_Box.getText();
+        	    String Access_Input = Access_Box.getText();
+        	    String Password_Input = Password_Box.getText();
+        	    String PassVeri_Input = Password_Veri_Box.getText();
+
+        	    Pattern Letters_Numbers = Pattern.compile("[a-zA-Z0-9]");
+        	    Pattern Letters_Only = Pattern.compile("[a-zA-Z]");
+        	    boolean hasSpecialChar = Letters_Numbers.matcher(Username_Input).find();
+        	    boolean hasSpecialChar1  = Letters_Only.matcher(Access_Input).find(); 
+        	    
+        	    //   System.out.println(FirstName_Input + " " + LastName_Input);
+            	//  System.out.println(Password_Input + " " + FirstName_Input + " " + LastName_Input+ " " + Username_Input +" " + Access_Input);
+            	
+       //~~~~~~~~~~~~~~~~~~~~~~~ERROR CHECKING AREA!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	    
+        	if(FirstName_Input.equals("") || LastName_Input.equals("") ||
+        	   FirstName_Input.equals(" ") || LastName_Input.equals(" "))
+        	{
+        		//Checks to make sure first and last name are present
+        		JOptionPane.showMessageDialog(null,
+    				    "Please enter a first and last name!",
+    				    "Missing Name Error",
+    				    JOptionPane.ERROR_MESSAGE);
+        	}
+        	
+        	if( hasSpecialChar == false)//Username_Input.equals("") || (Username_Input.equals(" ")))
+        	{
+        		//Checks to make sure Username present
+        		JOptionPane.showMessageDialog(null,
+    				    "Please enter a username!",
+    				    "Missing Username Error",
+    				    JOptionPane.ERROR_MESSAGE);
+        	}
+        	    //Checks access is correct. This is HARDCODED for now. Code = "teamj2014"
+        	if(!(Access_Input.equals("teamj2014")))
+        	{
+        		//Checks to make sure Username present
+        		JOptionPane.showMessageDialog(null,
+    				    "Please enter a correct access code!",
+    				    "Incorrect Access Code Error",
+    				    JOptionPane.ERROR_MESSAGE);
+        	}
+        	 //Checks password and verification password to make sure they are the same.   
+        	 if(!(Password_Input.equals(PassVeri_Input)) || ((Password_Input.equals("" + " ") ||
+        			 ((Password_Input.equals("" + " "))))))
+        	 {
+        		 JOptionPane.showMessageDialog(null,
+        				    "Passwords do not match!",
+        				    "Password Error",
+        				    JOptionPane.ERROR_MESSAGE);
+        	 }
+        	 if((Password_Input.equals(PassVeri_Input)) &&
+        	    (!(Password_Input.equals(""))) && (!(Password_Input.equals(""))) &&
+        		(!(FirstName_Input.equals("") || LastName_Input.equals(""))) &&
+        		(!(Username_Input.equals(""))) &&
+        		(Access_Input.equals("teamj2014")))
+        	 {
                     if (e.getSource() == Create_Button) {
                     	setVisible(false);
                             new NewFrame1();
@@ -181,6 +243,9 @@ public class NewFrame1 extends JFrame implements ActionListener
                     	setVisible(false);
                             new MainFrame();
                     }
+                    //If this line gets printed, checking is correct.
+            System.out.println(Password_Input + " " + FirstName_Input + " " + LastName_Input+ " " + Username_Input +" " + Access_Input);                  
+        	 }      
             }
     } // end of inner class
 
