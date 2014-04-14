@@ -61,6 +61,9 @@ public class MainFrame extends JFrame {
         	    Username_Box.setLocation(120, 60);
         	    Username_Box.setSize(210, 25);
         	    pane.add(Username_Box);	
+        	    //Variable for the input of the username on the login screen
+        	    String Username_Login_Input = Username_Box.getText();
+        	    
         	    
         		/*LABEL - PASSWORD_LABEL*/
         	    Password_Label = new JLabel("PASSWORD: ");
@@ -78,6 +81,8 @@ public class MainFrame extends JFrame {
 //        	    Password_Box.setBackground(Color.BLACK);
 //        		Password_Box.setForeground(Color.white);
         	    pane.add(Password_Box);
+        	    //Variable for the input of the password field on login screen
+        	    String Password_Login_Input = Password_Box.getText();
         	    
         	    /*BUTTON - CREATE*/
         	    Create_Button = new JButton("New User? Click Here");

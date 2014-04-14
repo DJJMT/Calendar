@@ -175,6 +175,13 @@ public class NewFrame1 extends JFrame implements ActionListener
 
         private class ButtonHandler implements ActionListener {
             public void actionPerformed(ActionEvent e) {
+            	
+            	 if (e.getSource() == Back_Button) {
+                 	setVisible(false);
+                         new MainFrame();
+                         return;
+                 }
+            	 
             	 //Jtextfield to variables
         	    String FirstName_Input = FirstName_Box.getText();
         	    String LastName_Input = LastName_Box.getText();
@@ -185,67 +192,77 @@ public class NewFrame1 extends JFrame implements ActionListener
 
         	    Pattern Letters_Numbers = Pattern.compile("[a-zA-Z0-9]");
         	    Pattern Letters_Only = Pattern.compile("[a-zA-Z]");
-        	    boolean hasSpecialChar = Letters_Numbers.matcher(Username_Input).find();
-        	    boolean hasSpecialChar1  = Letters_Only.matcher(Access_Input).find(); 
+        	    Pattern Non_White_Spaces = Pattern.compile("\\S");
+        	    
+        	    
+        	    boolean FirstName_hasSpecialChar = Letters_Only.matcher(FirstName_Input).find();
+        	    boolean LastName_hasSpecialChar = Letters_Only.matcher(LastName_Input).find();
+        	    boolean Username_hasSpecialChar = Letters_Numbers.matcher(Username_Input).find();
+        	   // boolean Access_hasSpecialChar  = Letters_Only.matcher(Access_Input).find(); 
+        	    boolean Password_hasSpecialChar = Non_White_Spaces.matcher(Password_Input).find();
+        	    
         	    
         	    //   System.out.println(FirstName_Input + " " + LastName_Input);
             	//  System.out.println(Password_Input + " " + FirstName_Input + " " + LastName_Input+ " " + Username_Input +" " + Access_Input);
             	
        //~~~~~~~~~~~~~~~~~~~~~~~ERROR CHECKING AREA!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	    
-        	if(FirstName_Input.equals("") || LastName_Input.equals("") ||
-        	   FirstName_Input.equals(" ") || LastName_Input.equals(" "))
+        	if( FirstName_hasSpecialChar == false  || LastName_hasSpecialChar == false)//FirstName_Input.equals("") || LastName_Input.equals("") ||
+        	      //FirstName_Input.equals(" ") || LastName_Input.equals(" "))
         	{
         		//Checks to make sure first and last name are present
         		JOptionPane.showMessageDialog(null,
-    				    "Please enter a first and last name!",
-    				    "Missing Name Error",
+    				    "Please enter a valid first and last name!",
+    				    "Name Error",
     				    JOptionPane.ERROR_MESSAGE);
         	}
         	
-        	if( hasSpecialChar == false)//Username_Input.equals("") || (Username_Input.equals(" ")))
+        	if( Username_hasSpecialChar == false)//Username_Input.equals("") || (Username_Input.equals(" ")))
         	{
         		//Checks to make sure Username present
         		JOptionPane.showMessageDialog(null,
-    				    "Please enter a username!",
-    				    "Missing Username Error",
-    				    JOptionPane.ERROR_MESSAGE);
-        	}
-        	    //Checks access is correct. This is HARDCODED for now. Code = "teamj2014"
-        	if(!(Access_Input.equals("teamj2014")))
-        	{
-        		//Checks to make sure Username present
-        		JOptionPane.showMessageDialog(null,
-    				    "Please enter a correct access code!",
-    				    "Incorrect Access Code Error",
+    				    "Please enter a valid username!",
+    				    "Username Error",
     				    JOptionPane.ERROR_MESSAGE);
         	}
         	 //Checks password and verification password to make sure they are the same.   
-        	 if(!(Password_Input.equals(PassVeri_Input)) || ((Password_Input.equals("" + " ") ||
-        			 ((Password_Input.equals("" + " "))))))
-        	 {
-        		 JOptionPane.showMessageDialog(null,
-        				    "Passwords do not match!",
-        				    "Password Error",
-        				    JOptionPane.ERROR_MESSAGE);
-        	 }
-        	 if((Password_Input.equals(PassVeri_Input)) &&
-        	    (!(Password_Input.equals(""))) && (!(Password_Input.equals(""))) &&
-        		(!(FirstName_Input.equals("") || LastName_Input.equals(""))) &&
-        		(!(Username_Input.equals(""))) &&
-        		(Access_Input.equals("teamj2014")))
+        	if(!(Password_Input.equals(PassVeri_Input)) || Password_hasSpecialChar == false)
+        	{
+        		JOptionPane.showMessageDialog(null,
+       				    "Passwords do not match!",
+       				    "Password Error",
+       				    JOptionPane.ERROR_MESSAGE);
+        	}
+        	    //Checks access is correct. This is HARDCODED for now. Code = "teamj2014"
+        	if( !(Access_Input.equals("teamj2014")))
+        	{
+        		//Checks to make sure Username present
+        		JOptionPane.showMessageDialog(null,
+    				    "Please enter the correct access code!",
+    				    "Access Code Error",
+    				    JOptionPane.ERROR_MESSAGE);
+        	}
+        	
+        	 if((FirstName_hasSpecialChar == true  && LastName_hasSpecialChar == true) &&
+        			 (Username_hasSpecialChar == true) &&
+        			 Access_Input.equals("teamj2014") &&
+        			 (Password_Input.equals(PassVeri_Input)) && Password_hasSpecialChar == true)
+        		 
         	 {
                     if (e.getSource() == Create_Button) {
                     	setVisible(false);
                             new NewFrame1();
-
+                            
+                            //If this line gets printed, checking is correct.
+                            System.out.println(FirstName_Input + " " + LastName_Input+ " " + Username_Input +" " + Password_Input + " " + Access_Input);           	
                     }
-                    if (e.getSource() == Back_Button) {
+        	 }
+                   /* if (e.getSource() == Back_Button) {
                     	setVisible(false);
                             new MainFrame();
-                    }
-                    //If this line gets printed, checking is correct.
-            System.out.println(Password_Input + " " + FirstName_Input + " " + LastName_Input+ " " + Username_Input +" " + Access_Input);                  
-        	 }      
+                            return;
+                    }*/
+                                  
+        	   
             }
     } // end of inner class
 
