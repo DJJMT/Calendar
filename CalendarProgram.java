@@ -1,7 +1,7 @@
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
-import java.awt.*; 
+import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.awt.BorderLayout;
@@ -11,7 +11,7 @@ import java.util.GregorianCalendar;
 
 public class CalendarProgram{
     static JLabel Month_Label, Year_Label;
-    static JButton Last_Button, Next_Button;
+    static JButton Last_Button, Next_Button, New_Appt_Button, Delete_Appt_Button;
     static JTable Calendar_Table;
     static JComboBox Year_ComboBox;
     static JFrame Main_JFrame;
@@ -48,6 +48,8 @@ public class CalendarProgram{
         Year_ComboBox = new JComboBox();
         Last_Button = new JButton ("LAST");
         Next_Button = new JButton ("NEXT");
+		New_Appt_Button = new JButton ("New Appointment");
+		Delete_Appt_Button = new JButton ("Delete Appointment");
         Calendar_TableModel = new DefaultTableModel(){public boolean isCellEditable(int rowIndex, int mColIndex){return false;}};
         Calendar_Table = new JTable(Calendar_TableModel);
         Calendar_ScrollPane = new JScrollPane(Calendar_Table);
@@ -59,6 +61,8 @@ public class CalendarProgram{
         //Register action listeners
         Last_Button.addActionListener(new Last_Button_Action());
         Next_Button.addActionListener(new Next_Button_Action());
+		New_Appt_Button.addActionListener(new New_Appt_Button_Action());
+		Delete_Appt_Button.addActionListener(new Delete_Appt_Button_Action());
         Year_ComboBox.addActionListener(new Year_ComboBox_Action());
         
         //Add controls to pane
@@ -68,15 +72,19 @@ public class CalendarProgram{
         Calendar_Panel.add(Year_ComboBox);
         Calendar_Panel.add(Last_Button);
         Calendar_Panel.add(Next_Button);
-        Calendar_Panel.add(Calendar_ScrollPane);
+        Calendar_Panel.add(New_Appt_Button);
+		Calendar_Panel.add(Delete_Appt_Button);
+		Calendar_Panel.add(Calendar_ScrollPane);
         
-        //Set bounds
+        //Set bounds (x,y,width,height)
         Calendar_Panel.setBounds(0, 0, width-50, height-50);
         Month_Label.setBounds((width - 50)/2 - 50, 25, 100, 25);
         Year_Label.setBounds(width - 270, height - 120, 80, 25);
         Year_ComboBox.setBounds(width - 180, height - 120, 80, 25);
         Last_Button.setBounds(((width - 50)/2) - 218, 25, 75, 25);
         Next_Button.setBounds(((width - 50)/2) + 75, 25, 75, 25);
+		New_Appt_Button.setBounds(0,25,150,25);
+		Delete_Appt_Button.setBounds(155,25,150,25);
         Calendar_ScrollPane.setBounds(10, 55, width - 65, ((height-200) - 5));
       
         //Make frame visible
@@ -132,6 +140,8 @@ public class CalendarProgram{
         //Allow/disallow buttons
         Last_Button.setEnabled(true);
         Next_Button.setEnabled(true);
+		New_Appt_Button.setEnabled(true);
+		Delete_Appt_Button.setEnabled(true);
         if (month == 0 && year <= Year_Actual-10){Last_Button.setEnabled(false);} //Too early
         if (month == 11 && year >= Year_Actual+100){Next_Button.setEnabled(false);} //Too late
         Month_Label.setText(months[month]); //Refresh the month label (at the top)
@@ -203,6 +213,18 @@ public class CalendarProgram{
                 Month_Current += 1;
             }
             refreshCalendar(Month_Current, Year_Current);
+        }
+    }
+	static class New_Appt_Button_Action implements ActionListener{
+        public void actionPerformed (ActionEvent e){
+            new Appt_Frame();
+            
+        }
+    }
+	static class Delete_Appt_Button_Action implements ActionListener{
+        public void actionPerformed (ActionEvent e){
+			new Delete_Appt_Frame();
+            
         }
     }
     static class Year_ComboBox_Action implements ActionListener{
